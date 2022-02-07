@@ -1,64 +1,68 @@
 const port = 8000;
-const path = `${__dirname}/src`;
+const path = __dirname;
 
 const express = require("express");
+const { redirect } = require("express/lib/response");
+const cors = require('cors');
 const app = express();
 
-app.use(express.static(path));
+/* app.use(express.static(path)); */
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
+app.use(cors());
 
-const d = new Date ();
-const categories = [
-    {"id":0, "name":"Category A"},
-    {"id":1, "name":"Category B"},
-    {"id":2, "name":"Category C"},
-];
+const userSessions = [];
+userSessions["127.0.0.1"] = { "ip":"127.0.0.1", "id":0 };
+userSessions["::1"] = { "ip":"::1", "id":0 };
 
-const products = [
-    {"id":0, "name":"Produto A", "categoryID":0, "quantyType":"L"},
-    {"id":1, "name":"Produto B", "categoryID":0, "quantyType":"G"}
-];
-
-const wallet = {"money":"200", "currency":"R$"}
-
-const markets = [
-    {
-        itens:[
-            {"id":0, "productID":0, "price":5},
-            {"id":1, "productID":1, "price":6}
-        ],
-        cart:[
-            {"id":0, "productID":0, "quanty":1}
-        ]
-    }
-];
+const dateToday = new Date ();
 
 app.get("/", (req, res) => 
 {
-    console.log(req.query);
-    res.json({products:products});
+    console.log(`Conexão ${req.ip} iniciada...`);
+    if(userSessions[req.ip]) {
+        console.log(`Conexão ${req.ip} foi um sucesso ;)`);
+        res.redirect(`/${userSessions[req.ip].id}`);
+    } else {
+        console.log(`Conexão ${req.ip} foi redirecionada :)`);
+        res.send("/user");
+    }
+    //res.json({"r":[]});
 });
 
-app.get("/categories", (req, res) => 
+app.options('/user', cors())
+app.post("/user", (req, res) => 
+{
+    console.log(`Conexão ${req.ip} direcionado para area de usuario e ${req.body}`);
+    
+    //res.json({"r":[]});
+});
+
+app.get("/:id/", (req, res) => 
+{
+    console.log(req.params);
+    res.json({"id":req.params["id"]});
+});
+
+app.get("/:id/categories", (req, res) => 
 {
     console.log(req.query);
     res.json({categories:categories});
 });
 
-app.get("/products", (req, res) => 
+app.get("/:id/products", (req, res) => 
 {
     console.log(req.query);
     res.json({products:products});
 });
 
-app.get("/wallet", (req, res) => 
+app.get("/:id/wallet", (req, res) => 
 {
     console.log(req.query);
     res.json(wallet);
 });
 
-app.get("/markets", (req, res) => 
+app.get("/:id/markets", (req, res) => 
 {
     console.log(req.query);
     res.json({markets:markets});

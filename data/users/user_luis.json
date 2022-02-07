@@ -1,0 +1,30 @@
+{
+    "id":0,
+    "login":"luis",
+    "password":"1234",
+    "wallet":{
+        "money":[
+            {"value":"200", "currency":"R$"}
+        ]
+    },
+    "categories": [
+        {"id":0, "name":"Category A"},
+        {"id":1, "name":"Category B"},
+        {"id":2, "name":"Category C"}
+    ],
+    "products": [
+        {"id":0, "name":"Produto A", "categoryID":0, "quantyType":"L"},
+        {"id":1, "name":"Produto B", "categoryID":0, "quantyType":"G"}
+    ],
+    "markets":[
+        {
+            "itens":[
+                {"id":0, "productID":0, "price":5},
+                {"id":1, "productID":1, "price":6}
+            ],
+            "cart":[
+                {"id":0, "productID":0, "quanty":1}
+            ]
+        }
+    ]
+}
