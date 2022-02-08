@@ -104,20 +104,24 @@ app.get("/:id/", (req, res) =>
 
 app.get("/:id/categories", (req, res) => 
 {
-    console.log(req.query);
+    const id = req.params["id"];
+    console.log(id);
     res.json({categories:categories});
 });
 
 app.get("/:id/products", (req, res) => 
 {
-    console.log(req.query);
+    const id = req.params["id"];
+    console.log(id);
     res.json({products:products});
 });
 
 app.get("/:id/wallet", (req, res) => 
 {
-    console.log(req.query);
-    res.json(wallet);
+    const id = req.params["id"];
+    console.log(id);
+    
+    res.json({"wallet":users[id].wallet});
 });
 
 app.get("/:id/markets", (req, res) => 
