@@ -58,7 +58,7 @@ app.get("/", (req, res) =>
         res.redirect(`/${userSessions[req.ip].id}`);
     } else {
         console.log(`Conexão ${req.ip} foi redirecionada :)`);
-        res.send("/user");
+        res.send("-1");
     }
     //res.json({"r":[]});
 });
@@ -81,7 +81,7 @@ app.post("/user", (req, res) =>
     }
 
     const userid = SearchUser(username);
-    if(password != users[userid].password) 
+    if(password != users[userid].pass) 
     {
         console.log(`Conexão ${req.ip} password errado!`);
         res.send(`-1`);
